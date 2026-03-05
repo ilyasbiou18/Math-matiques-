@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Calculator</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        input, button {
+            padding: 10px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        input {
+            width: 200px;
+            text-align: right;
+            font-size: 24px;
+            background-color: #1e1e1e;
+            color: #ffffff;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .history {
+            margin-top: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+            width: 100%;
+        }
+
+        .history-item {
+            background-color: #2a2a2a;
+            padding: 5px;
+            border-radius: 5px;
+            margin: 2px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>آلة حاسبة متقدمة</h1>
+    <input type="text" id="display" disabled />
+    <div>
+        <button onclick="clearDisplay()">C</button>
+        <button onclick="appendToDisplay('7')">7</button>
+        <button onclick="appendToDisplay('8')">8</button>
+        <button onclick="appendToDisplay('9')">9</button>
+        <button onclick="appendToDisplay('/')">&#247;</button>
+    </div>
+    <div>
+        <button onclick="appendToDisplay('4')">4</button>
+        <button onclick="appendToDisplay('5')">5</button>
+        <button onclick="appendToDisplay('6')">6</button>
+        <button onclick="appendToDisplay('*')">&#10006;</button>
+    </div>
+    <div>
+        <button onclick="appendToDisplay('1')">1</button>
+        <button onclick="appendToDisplay('2')">2</button>
+        <button onclick="appendToDisplay('3')">3</button>
+        <button onclick="appendToDisplay('-')">&#8722;</button>
+    </div>
+    <div>
+        <button onclick="appendToDisplay('0')">0</button>
+        <button onclick="calculateResult()">=</button>
+        <button onclick="appendToDisplay('+')">+</button>
+    </div>
+    <div class="history" id="history"></div>
+    <script>
+        const historyContainer = document.getElementById('history');
+
+        function appendToDisplay(value) {
+            document.getElementById('display').value += value;
+        }
+
+        function clearDisplay() {
+            document.getElementById('display').value = '';
+        }
+
+        function calculateResult() {
+            try {
+                const result = eval(document.getElementById('display').value);
+                addToHistory(`${document.getElementById('display').value} = ${result}`);
+                document.getElementById('display').value = result;
+            } catch (error) {
+                alert('Error in calculation');
+            }
+        }
+
+        function addToHistory(entry) {
+            const div = document.createElement('div');
+            div.className = 'history-item';
+            div.textContent = entry;
+            historyContainer.appendChild(div);
+        }
+    </script>
+</body>
+</html>
